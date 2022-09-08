@@ -1,25 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react'
+export const App = () => {
+  const devs = [
+    { name: 'Nathan', expertise: 'React', available: true },
+    { name: 'Aziza', expertise: 'Vue, React', available: false },
+    { name: 'Alexis', expertise: 'Rust', available: true },
+    { name: 'Orlando', expertise: 'React, JavaScript', available: true },
+    { name: 'Gary', expertise: 'Flying, JavaScript', available: false },
+    { name: 'Corey', expertise: 'React, ReactRouter', available: true },
+    { name: 'Jeff', expertise: 'React, Remix', available: true },
+  ]
 
-function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <h1>Developers for Hire! 👩‍💻</h1>
+      <div className="dev-list">
+        <div>
+          {devs.map((dev, index) => (
+            <Developer
+              name={dev.name}
+              expertise={dev.expertise}
+              available={dev.available}
+              key={index}
+            />
+          ))}
+        </div>
+      </div>
+    </>
+  )
 }
 
-export default App;
+const Developer = ({ name, expertise, available }) => {
+  const [expanded, setExpanded] = useState(false)
+
+  const handleClick = () => {
+    // change the state when the button is clicked
+    setExpanded(!expanded)
+  }
+  return (
+    <div style={{ border: '1px solid purple', margin: '10px' }}>
+      <p>{name}</p>
+      <button onClick={() => handleClick()}>
+        {expanded ? 'Less' : 'More'} info
+      </button>
+      {expanded ? <p>Expertise: {expertise}</p> : ''}
+    </div>
+  )
+}
