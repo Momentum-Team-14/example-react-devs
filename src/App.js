@@ -1,5 +1,7 @@
+import { useEffect } from 'react'
 import { useState } from 'react'
 import { devs } from './devData'
+import axios from 'axios'
 
 export const App = () => {
   const [selectedDev, setSelectedDev] = useState(null)
@@ -14,6 +16,7 @@ export const App = () => {
       <DeveloperDetail
         name={selectedDev.name}
         expertise={selectedDev.expertise}
+        github={selectedDev.github}
         handleSelectedDev={setSelectedDev}
       />
     )
@@ -44,7 +47,17 @@ const Developer = ({ devObj, selectDev }) => {
   )
 }
 
-const DeveloperDetail = ({ name, expertise, handleSelectedDev }) => {
+const DeveloperDetail = ({ name, expertise, github, handleSelectedDev }) => {
+  const [repos, setRepos] = useState([])
+
+  useEffect(() => {
+    console.log('useEffect runs')
+    axios
+      .get(`https://api.github.com/users/${github}/repos`)
+      .then((res) => setRepos(res.data))
+  }, [])
+
+  console.log('About to return content')
   return (
     <div>
       <button
