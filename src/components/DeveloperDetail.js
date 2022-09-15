@@ -7,7 +7,7 @@ const DeveloperDetail = ({ name, expertise, github, handleSelectedDev }) => {
     console.log('useEffect runs 🍳')
     axios
       .get(`https://api.github.com/users/${github}/repos`)
-      .then((res) => setRepos(res.data))
+      .then((res) => console.log(res))
   }, [github])
 
   console.log('About to return content 🥥')
@@ -22,6 +22,11 @@ const DeveloperDetail = ({ name, expertise, github, handleSelectedDev }) => {
       </button>
       <p>{name}</p>
       <p>Expertise: {expertise}</p>
+      <ul>
+        <li>repo1</li>
+        <li>repo2</li>
+        <li>repo3</li>
+      </ul>
     </div>
   )
 }
