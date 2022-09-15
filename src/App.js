@@ -28,7 +28,11 @@ export const App = () => {
       <div className="dev-list">
         <div>
           {devs.map((dev, index) => (
-            <Developer devObj={dev} key={index} selectDev={handleSelectedDev} />
+            <Developer
+              name={dev.name}
+              key={index}
+              selectDev={() => setSelectedDev(dev)}
+            />
           ))}
         </div>
       </div>

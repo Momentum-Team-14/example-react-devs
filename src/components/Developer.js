@@ -1,10 +1,10 @@
-const Developer = ({ devObj, selectDev }) => {
+const Developer = ({ name, selectDev }) => {
   return (
     <div
       style={{ border: '1px solid purple', margin: '10px', padding: '5px' }}
-      onClick={() => selectDev(devObj)}
+      onClick={selectDev}
     >
-      {devObj.name}
+      {name}
     </div>
   )
 }
