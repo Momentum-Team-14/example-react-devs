@@ -1,7 +1,7 @@
-import { useEffect } from 'react'
 import { useState } from 'react'
 import { devs } from './devData'
-import axios from 'axios'
+import Developer from './components/Developer'
+import DeveloperDetail from './components/DeveloperDetail'
 
 export const App = () => {
   const [selectedDev, setSelectedDev] = useState(null)
@@ -33,42 +33,5 @@ export const App = () => {
         </div>
       </div>
     </>
-  )
-}
-
-const Developer = ({ devObj, selectDev }) => {
-  return (
-    <div
-      style={{ border: '1px solid purple', margin: '10px', padding: '5px' }}
-      onClick={() => selectDev(devObj)}
-    >
-      {devObj.name}
-    </div>
-  )
-}
-
-const DeveloperDetail = ({ name, expertise, github, handleSelectedDev }) => {
-  const [repos, setRepos] = useState([])
-
-  useEffect(() => {
-    console.log('useEffect runs')
-    axios
-      .get(`https://api.github.com/users/${github}/repos`)
-      .then((res) => setRepos(res.data))
-  }, [])
-
-  console.log('About to return content')
-  return (
-    <div>
-      <button
-        onClick={() => {
-          handleSelectedDev(null)
-        }}
-      >
-        Go Back to List
-      </button>
-      <p>{name}</p>
-      <p>Expertise: {expertise}</p>
-    </div>
   )
 }
