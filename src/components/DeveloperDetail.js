@@ -2,12 +2,18 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 const DeveloperDetail = ({ name, expertise, github, handleSelectedDev }) => {
   const [repos, setRepos] = useState([])
+  const [avatar, setAvatar] = useState(null)
 
   useEffect(() => {
     console.log('useEffect runs 🍳')
-    axios
-      .get(`https://api.github.com/users/${github}/repos`)
-      .then((res) => console.log(res))
+    axios.get(`https://api.github.com/users/${github}/repos`).then((res) => {
+      const repoData = res.data.map((repo) => ({
+        name: repo.name,
+        url: repo.html_url,
+      }))
+      setRepos(repoData)
+      setAvatar(res.data[0].owner.avatar_url)
+    })
   }, [github])
 
   console.log('About to return content 🥥')
@@ -23,9 +29,11 @@ const DeveloperDetail = ({ name, expertise, github, handleSelectedDev }) => {
       <p>{name}</p>
       <p>Expertise: {expertise}</p>
       <ul>
-        <li>repo1</li>
-        <li>repo2</li>
-        <li>repo3</li>
+        {repos.map((repo) => (
+          <li>
+            <a href={repo.url}>{repo.name}</a>
+          </li>
+        ))}
       </ul>
     </div>
   )
