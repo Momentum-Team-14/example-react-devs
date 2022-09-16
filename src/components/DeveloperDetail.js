@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import orderBy from 'lodash/orderBy'
+
 const DeveloperDetail = ({ name, expertise, github, handleSelectedDev }) => {
   const [repos, setRepos] = useState([])
   const [avatar, setAvatar] = useState(null)
@@ -18,23 +20,37 @@ const DeveloperDetail = ({ name, expertise, github, handleSelectedDev }) => {
 
   console.log('About to return content 🥥')
   return (
-    <div>
+    <div className="dev-detail content m-3">
       <button
         onClick={() => {
           handleSelectedDev(null)
         }}
+        className="btn-link"
       >
         Go Back to List
       </button>
-      <p>{name}</p>
+
+      <div class="tile u-items-center mb-3">
+        <div class="tile__icon">
+          <figure class="avatar avatar--xl">
+            {avatar && <img src={avatar} />}
+          </figure>
+        </div>
+        <div class="tile__container">
+          <h2 className="uppercase tile__title m-0">{name}</h2>
+        </div>
+      </div>
       <p>Expertise: {expertise}</p>
-      <ul>
-        {repos.map((repo) => (
-          <li>
-            <a href={repo.url}>{repo.name}</a>
-          </li>
-        ))}
-      </ul>
+      <div className="repo-list">
+        <h4>Github Repos</h4>
+        <ul>
+          {orderBy(repos, ['updated_at', 'desc']).map((repo) => (
+            <li key={repo.id}>
+              <a href={repo.url}>{repo.name}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   )
 }
