@@ -4,7 +4,7 @@ import DeveloperDetail from './components/DeveloperDetail'
 import { useEffect } from 'react'
 import axios from 'axios'
 import 'cirrus-ui'
-import { InputField } from './components/Forms'
+import { InputField, Login } from './components/Forms'
 
 export const App = () => {
   const [selectedDev, setSelectedDev] = useState(null)
@@ -17,7 +17,7 @@ export const App = () => {
   }, [])
 
   if (showForms) {
-    return <InputField />
+    return <Login />
   }
 
   if (selectedDev) {
